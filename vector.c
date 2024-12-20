@@ -2,9 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
-extern crutch_1;
-extern char outfile;
+#include "common.h"
 
 typedef struct {
     char developer[50];
@@ -45,7 +43,7 @@ void clear_vec(Vector* vec) {
 }
 
 void gener(Vector* vec) {
-    int N = 10;
+    int N;
     const char* developers[] = {"GruppaPIK", "ZILART", "MrGroup", "Donstroi"};
     const char* microrions[] = {"Zaton", "Odentsovo", "Arbat", "Ganchjoy"};
     const char* types[] = {"panel", "brick", "monolithic"};
@@ -102,10 +100,12 @@ void export_houses(Vector* vec){
     }
 }
 
-int main() {
+int main_1() {
     Vector vec;
     init_vec(&vec);
     gener(&vec);
+    char outfile[50];
+    int crutch_1;
     if (crutch_1 == 0){
         print_houses(&vec);
     } else{

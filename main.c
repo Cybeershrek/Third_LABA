@@ -3,6 +3,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <getopt.h>
+#include "common.h"
+
+char outfile[50];
+char infile[50];
+int crutch_1 = 0;
+int N;
 
 int main(int argc, char *argv[]) {
     int opt;
@@ -16,29 +22,24 @@ int main(int argc, char *argv[]) {
         {"print", no_argument, 0, 'P'},
         {0, 0, 0, 0} // Завершающий элемент
     };
-    int crutch_1 = 0;
-    char outfile[50];
-    char infile[50];    
-
-    while ((opt = getopt_long(argc, argv, "hgstoiP:", long_options, NULL)) != -1) {
+    strcpy(outfile, "NO_FILE");
+    strcpy(outfile, "NO_FILE");
+    while ((opt = getopt_long(argc, argv, "oi:", long_options, NULL)) != -1) {
         switch (opt)
         {
         case 'o':
             crutch_1 = 1;
-            snprintf(outfile, 50, optarg);
+            strcpy(outfile, optarg);
             break;
         case 'i':
             crutch_1 = 1;
-            snprintf(infile, 50, optarg);
+            strcpy(infile, optarg);
         default:
-            snprintf(outfile, 50, "NO_FILE");
-            snprintf(infile, 50, "NO_FILE");
             break;
         }
     }    
 
-
-    while ((opt = getopt_long(argc, argv, "hgstoiP:", long_options, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "hgstP:", long_options, NULL)) != -1) {
         switch (opt) {
             case 'h':
                 printf("A program running with the  --generate N  or  -g  N flag generates random data (number of N lines).\n");
@@ -49,10 +50,12 @@ int main(int argc, char *argv[]) {
                 printf("A program running with the  --print  or  -P  flag reads the data and outputs it in a fixed-width table format.\n");
                 break;
             case 'g':
-                system("./vector.c");
+                int N = optarg;
+                main_1();
                 break;
             default:
                 printf("Please enter something(i recommenden -h).\n");
+                break;
         }
     }
     return 0;

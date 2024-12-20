@@ -60,6 +60,7 @@
     "stdio.h": "c",
     "stdlib.h": "c",
     "stdbool.h": "c",
-    "getopt.h": "c"
+    "getopt.h": "c",
+    "string.h": "c"
   }
 }
