@@ -16,6 +16,27 @@ int main(int argc, char *argv[]) {
         {"print", no_argument, 0, 'P'},
         {0, 0, 0, 0} // Завершающий элемент
     };
+    int crutch_1 = 0;
+    char outfile[50];
+    char infile[50];    
+
+    while ((opt = getopt_long(argc, argv, "hgstoiP:", long_options, NULL)) != -1) {
+        switch (opt)
+        {
+        case 'o':
+            crutch_1 = 1;
+            snprintf(outfile, 50, optarg);
+            break;
+        case 'i':
+            crutch_1 = 1;
+            snprintf(infile, 50, optarg);
+        default:
+            snprintf(outfile, 50, "NO_FILE");
+            snprintf(infile, 50, "NO_FILE");
+            break;
+        }
+    }    
+
 
     while ((opt = getopt_long(argc, argv, "hgstoiP:", long_options, NULL)) != -1) {
         switch (opt) {
@@ -28,10 +49,7 @@ int main(int argc, char *argv[]) {
                 printf("A program running with the  --print  or  -P  flag reads the data and outputs it in a fixed-width table format.\n");
                 break;
             case 'g':
-                int f = 0;
-                case 'o':
-                    f = 1;
-
+                system("./vector.c");
                 break;
             default:
                 printf("Please enter something(i recommenden -h).\n");

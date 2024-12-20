@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdbool.h>
 
+extern crutch_1;
+extern char outfile;
+
 typedef struct {
     char developer[50];
     char microrion[100];
@@ -83,11 +86,31 @@ void print_houses(Vector* vec) {
     }
 }
 
+void export_houses(Vector* vec){
+    FILE *file = fopen(outfile, "w");
+    for (size_t i = 0; i < vec->size; i++) {
+        House r = vec->data[i];
+        fprintf(file, "\"%s\"  ", r.developer, ",");
+        fprintf(file, "\"%s\"  ", r.microrion, ",");
+        fprintf(file, "\"%s\"  ", r.type, ",");
+        fprintf(file,"%d  ", r.foundation, ",");
+        fprintf(file,"%d  ", r.eliva, ",");
+        fprintf(file,"%d  ", r.garb, ",");
+        fprintf(file,"%d  ", r.count_flat, ",");
+        fprintf(file,"%d  ", r.count_floors, ",");
+        fprintf(file,"%d\n", r.aver_S_flats, ",");
+    }
+}
+
 int main() {
     Vector vec;
     init_vec(&vec);
     gener(&vec);
-    print_houses(&vec);
+    if (crutch_1 == 0){
+        print_houses(&vec);
+    } else{
+        export_houses(&vec);
+    }
     clear_vec(&vec);
     return 0;
 }
