@@ -2,7 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "common.h"
+#include "Universal.h"
+
+int N;
+char outfile[50];
+int crutch_1;
 
 typedef struct {
     char developer[50];
@@ -43,7 +47,6 @@ void clear_vec(Vector* vec) {
 }
 
 void gener(Vector* vec) {
-    int N;
     const char* developers[] = {"GruppaPIK", "ZILART", "MrGroup", "Donstroi"};
     const char* microrions[] = {"Zaton", "Odentsovo", "Arbat", "Ganchjoy"};
     const char* types[] = {"panel", "brick", "monolithic"};
@@ -69,7 +72,7 @@ void gener(Vector* vec) {
 }
 
 void print_houses(Vector* vec) {
-    printf("Builder  Neighborhood  Type  Build  Year  Has Elevator  Has Trash Chute  Num Apartments  Num Floors  Avg Area\n");
+    printf("Builder  Neighborhood  Type  Build  Year  Has Elevatorn  Has Trash Chute  Num Apartments  Num Floors  Avg Area\n");
     for (size_t i = 0; i < vec->size; i++) {
         House r = vec->data[i];
         printf("\"%s\"  ", r.developer);
@@ -84,28 +87,34 @@ void print_houses(Vector* vec) {
     }
 }
 
-void export_houses(Vector* vec){
+void export_houses(Vector* vec) {
     FILE *file = fopen(outfile, "w");
+    if (file == NULL) {
+        perror("Error opening file");
+        return;
+    }
+
     for (size_t i = 0; i < vec->size; i++) {
         House r = vec->data[i];
-        fprintf(file, "\"%s\"  ", r.developer, ",");
-        fprintf(file, "\"%s\"  ", r.microrion, ",");
-        fprintf(file, "\"%s\"  ", r.type, ",");
-        fprintf(file,"%d  ", r.foundation, ",");
-        fprintf(file,"%d  ", r.eliva, ",");
-        fprintf(file,"%d  ", r.garb, ",");
-        fprintf(file,"%d  ", r.count_flat, ",");
-        fprintf(file,"%d  ", r.count_floors, ",");
-        fprintf(file,"%d\n", r.aver_S_flats, ",");
+        fprintf(file, "\"%s\",\"%s\",\"%s\",%d,%d,%d,%d,%d,%d\n",
+                r.developer,
+                r.microrion,
+                r.type,
+                r.foundation,
+                r.eliva,
+                r.garb,
+                r.count_flat,
+                r.count_floors,
+                r.aver_S_flats);
     }
+
+    fclose(file);
 }
 
-int main_1() {
+int main() {
     Vector vec;
     init_vec(&vec);
     gener(&vec);
-    char outfile[50];
-    int crutch_1;
     if (crutch_1 == 0){
         print_houses(&vec);
     } else{
